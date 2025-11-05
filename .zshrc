@@ -1,11 +1,16 @@
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/tracy/.oh-my-zsh
+#--------------------------------------------------------------------------
+# Oh My Zsh
+#--------------------------------------------------------------------------
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="mh"
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
 # ZSH_THEME="agnoster"
+# Theme is handled by oh-my-posh (see end of this file)
+
+HYPHEN_INSENSITIVE="true"
+VI_MODE_SET_CURSOR=true
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 
 DEFAULT_USER="$USER"
 
@@ -13,7 +18,7 @@ DEFAULT_USER="$USER"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -23,7 +28,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -33,9 +38,16 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	composer
+    artisan
+    npm
+    vi-mode
+    composer
+    cp
+    docker
+    docker-compose
 	extract
 	git
+    rsync
 	volta
 	zsh-autosuggestions
 	zsh-syntax-highlighting
@@ -43,12 +55,39 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+#--------------------------------------------------------------------------
+# Configuration
+#--------------------------------------------------------------------------
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Decrease delay that vi-mode waits for the end of a key sequence
+export KEYTIMEOUT=15
+
+export EDITOR=nvim
+export GIT_EDITOR=nvim
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+export ARTISAN_OPEN_ON_MAKE_EDITOR=nvr
+export FZF_DEFAULT_COMMAND='ag -u -g ""'
+export FZF_DEFAULT_OPTS='
+--border=rounded
+--padding=0,1
+--margin=4,10
+--color=dark
+--color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
+--color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef,gutter:-1,border:#1f2335
+'
+
+unsetopt sharehistory
+
+#--------------------------------------------------------------------------
+# Aliases
+#--------------------------------------------------------------------------
+
+alias vim="nvim"
+
+#--------------------------------------------------------------------------
+# Miscellaneous
+#--------------------------------------------------------------------------
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -56,9 +95,6 @@ if [[ -n $SSH_CONNECTION ]]; then
  else
   export EDITOR='nvim'
 fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -75,17 +111,12 @@ fi
 . `brew --prefix`/etc/profile.d/z.sh
 
 
-# Make sure R
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3.6)"
-
 
 # export PATH="/usr/local/opt/php/sbin:$PATH"
 # export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 # export PATH="$PATH:/usr/local/Cellar/mysql@5.7/5.7.32/bin/mysql"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-
 
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -105,9 +136,6 @@ export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/tracy/.docker/completions $fpath)
@@ -117,4 +145,3 @@ compinit
 
 
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.json)"
-#eval "$(starship init zsh)"
