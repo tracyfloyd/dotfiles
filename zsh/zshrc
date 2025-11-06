@@ -44,13 +44,15 @@ plugins=(
     cp
     docker
     docker-compose
-	extract
-	git
+    extract
+    git
     rsync
-	volta
-	zsh-autosuggestions
-	zsh-syntax-highlighting
+    volta
+    zsh-autosuggestions
+    zsh-syntax-highlighting
 )
+
+#$(brew shellenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -78,11 +80,28 @@ export FZF_DEFAULT_OPTS='
 
 unsetopt sharehistory
 
+
 #--------------------------------------------------------------------------
 # Aliases
 #--------------------------------------------------------------------------
-
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="st ~/.zshrc"
+# alias ohmyzsh="st ~/.oh-my-zsh"
 alias vim="nvim"
+alias nv="nvim"
+
+# ---- Eza (better ls) -----
+alias ls="eza --icons=always"
+
+# ---- Zoxide (better cd) ----
+eval "$(zoxide init zsh)"
+alias cd="z"
+
 
 #--------------------------------------------------------------------------
 # Miscellaneous
@@ -98,16 +117,6 @@ fi
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="st ~/.zshrc"
-# alias ohmyzsh="st ~/.oh-my-zsh"
-
-. `brew --prefix`/etc/profile.d/z.sh
 
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
@@ -139,3 +148,5 @@ compinit
 
 
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.json)"
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
